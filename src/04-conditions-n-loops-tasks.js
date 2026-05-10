@@ -27,7 +27,6 @@
  *
  */
 function getFizzBuzz(num) {
-
   if (num % 3 === 0 && num % 5 === 0) {
     return 'FizzBuzz';
   }
@@ -55,7 +54,6 @@ function getFizzBuzz(num) {
  *   10 => 3628800
  */
 function getFactorial(n) {
-
   let result = 1;
 
   for (let i = 1; i <= n; i += 1) {
@@ -78,7 +76,6 @@ function getFactorial(n) {
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
 function getSumBetweenNumbers(n1, n2) {
-
   let sum = 0;
 
   for (let i = n1; i <= n2; i += 1) {
@@ -104,13 +101,7 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a, b, c) {
-
-  return (
-    a + b > c &&
-    a + c > b &&
-    b + c > a
-  );
-
+  return a + b > c && a + c > b && b + c > a;
 }
 
 /**
@@ -190,10 +181,10 @@ function isInsideCircle(circle, point) {
   const dx = point.x - circle.center.x;
   const dy = point.y - circle.center.y;
   const distance = Math.sqrt(dx * dx + dy * dy);
-  if (distance <= circle.radius){
-    return true
-  } else return false
-
+  if (distance < circle.radius) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -208,16 +199,15 @@ function isInsideCircle(circle, point) {
  *   'entente' => null
  */
 function findFirstSingleChar(str) {
-  for (let i = 0; i < str.length; i += 1){
+  for (let i = 0; i < str.length; i += 1) {
     const firstSeenIndex = str.indexOf(str[i]);
-    const lastSeenIndex = str.lastIndexOf(str[i])
-    if (firstSeenIndex === lastSeenIndex){
-      return str[i]
+    const lastSeenIndex = str.lastIndexOf(str[i]);
+    if (firstSeenIndex === lastSeenIndex) {
+      return str[i];
     }
-    
   }
-  
-  return null
+
+  return null;
 }
 
 /**
@@ -244,20 +234,20 @@ function findFirstSingleChar(str) {
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
   const minNumber = Math.min(a, b);
-  const maxNumber = Math.max(a,b);
+  const maxNumber = Math.max(a, b);
   let startStr = '';
   let endStr = '';
-  if (isStartIncluded === true){
-   startStr += "["
+  if (isStartIncluded === true) {
+    startStr += '[';
   } else {
-   startStr += "("
+    startStr += '(';
   }
-  if (isEndIncluded === true){
-    endStr += "]"
-   } else {
-    endStr += ")"
-   }
-return startStr + minNumber + ', ' + maxNumber + endStr
+  if (isEndIncluded === true) {
+    endStr += ']';
+  } else {
+    endStr += ')';
+  }
+  return `${startStr + minNumber}, ${maxNumber}${endStr}`;
 }
 
 /**
@@ -273,7 +263,6 @@ return startStr + minNumber + ', ' + maxNumber + endStr
  * 'noon' => 'noon'
  */
 function reverseString(str) {
-
   let result = '';
 
   for (let i = str.length - 1; i >= 0; i -= 1) {
@@ -297,8 +286,8 @@ function reverseString(str) {
  */
 function reverseInteger(num) {
   const str = String(num);
-  const arr = str.split("");
-  return Number(arr.reverse().join(''))
+  const arr = str.split('');
+  return Number(arr.reverse().join(''));
 }
 
 /**
@@ -360,15 +349,20 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-  while (num > 9){
-    let str = String(num);
+  let result = num;
+
+  while (result > 9) {
+    const str = String(result);
     let sum = 0;
-    for ( const el of str){
-      sum += Number(el);
+
+    for (let i = 0; i < str.length; i += 1) {
+      sum += Number(str[i]);
     }
-    num = sum;
+
+    result = sum;
   }
-  return num;
+
+  return result;
 }
 
 /**
@@ -397,18 +391,18 @@ function isBracketsBalanced(str) {
     ')': '(',
     ']': '[',
     '}': '{',
-    '>': '<'
+    '>': '<',
   };
 
   const stack = [];
 
-  for (const char of str) {
+  for (let i = 0; i < str.length; i += 1) {
+    const char = str[i];
+
     if (char === '(' || char === '[' || char === '{' || char === '<') {
       stack.push(char);
-    } else {
-      if (stack.pop() !== pairs[char]) {
-        return false;
-      }
+    } else if (stack.pop() !== pairs[char]) {
+      return false;
     }
   }
 
@@ -450,16 +444,14 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-  const parts = pathes.map(path => path.split('/'));
+  const parts = pathes.map((path) => path.split('/'));
 
-  let result = [];
+  const result = [];
 
-  for (let i = 0; i < parts[0].length; i += 1) {
+  for (let i = 0; i < parts[0].length - 1; i += 1) {
     const current = parts[0][i];
 
-    const isCommon = parts.every(path => path[i] === current);
-
-    if (isCommon) {
+    if (parts.every((path) => path[i] === current)) {
       result.push(current);
     } else {
       break;
@@ -470,13 +462,11 @@ function getCommonDirectoryPath(pathes) {
     return '/';
   }
 
-  result.pop();
-
   if (result.length === 0) {
     return '';
   }
 
-  return result.join('/') + '/';
+  return `${result.join('/')}/`;
 }
 /**
  * Returns the product of two specified matrixes.
@@ -559,10 +549,12 @@ function evaluateTicTacToePosition(position) {
 
     // diagonals
     [position[0][0], position[1][1], position[2][2]],
-    [position[0][2], position[1][1], position[2][0]]
+    [position[0][2], position[1][1], position[2][0]],
   ];
 
-  for (const line of lines) {
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+
     if (line[0] !== undefined && line[0] === line[1] && line[1] === line[2]) {
       return line[0];
     }
